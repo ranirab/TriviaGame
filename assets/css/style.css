@@ -1,0 +1,41 @@
+.container {
+    background-image: url("balloons.jpeg");
+    height:900px;
+    width: 750px;
+    border: 3px solid green;
+    padding: 10px;
+   
+}
+
+.top-box {
+    background-color: lightyellow;
+    height: 150px;
+    width: 500px;
+    margin: 0px 0px 30px 0px;
+}
+
+.trivia {
+    background-color: lightgreen;
+    height: 400px;
+    width: 500px;
+    margin: 20px;
+
+}
+
+#start {
+    
+    margin: 0px 0px 10px 0px;
+}
+
+#play-again {
+   
+    margin: 20px;
+}
+
+.results-box {
+    background-color: lightyellow;
+    height: 200px;
+    width: 500 px;
+    margin: 50px;
+}
+

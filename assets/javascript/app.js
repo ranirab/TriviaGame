@@ -13,28 +13,36 @@ $(document).ready(function () {
             array[rand] = temp;
         }
         return array;
-    }
+    };
+
     $("#start-button").on("click", runGame);
-    var wins = 0;
-    var loses = 0;
-    var questionNumber = 0;
 
     // start button clicked
     function runGame() {
         var correctAnswer;
-
-
+        var wins = 0;
+        var loses = 0;
+    
         // questions
-        var url = " https://opentdb.com/api.php?amount=10";    
+        var url = " https://opentdb.com/api.php?amount=20";    
         $.ajax({        
             url: url,
             method: 'GET'    
         }).done(function (response) {
 
-            //continues to loop more questions 
+            var questionNumber = 0;
+            var aNumber = 0;
+
             function nextGame() {
+                aNumber++;
+                console.log("questionNumber " + questionNumber);
+                console.log("Next game " + aNumber);
+                console.log("wins " + wins);
+                console.log("losses " + loses);
                 $("#trivia-questions").empty();
                 runTimer();
+
+                console.log("question number" + questionNumber);
                 if (questionNumber < 10) {
 
                     var question = response.results[questionNumber].question;
@@ -52,6 +60,7 @@ $(document).ready(function () {
 
                     //shuffles array
                     shuffle(answersArray);
+
                     for (var i = 0; i < answersArray.length; i++) {
                         let buttondiv = $("<button>");
                         buttondiv.addClass("answers");
@@ -60,15 +69,15 @@ $(document).ready(function () {
                         buttondiv.val(answersArray[i]);
                         $("#trivia-questions").append(buttondiv);
                         $("#trivia-questions").append(brdiv);
-                    }
+                    };
 
                     //listens to answer chosen event, stopTimer
-                    $("#trivia-questions").on("click", ".answers", function (event) {
+                    $(".answers").on("click", function (event) {
                         event.preventDefault();
                         stopTimer();
-                        clearInterval(intervalId);
-                        
-                        if ($(this).val() == correctAnswer) { 
+
+                        if ($(this).val() == correctAnswer) {
+                            console.log("wins " + wins);
                             wins++;
                             $("#trivia-questions").html("<h3>Correct!</h3>");
                             $("#wins").html("<h2>" + wins + "</h2>");
@@ -76,6 +85,7 @@ $(document).ready(function () {
                                 nextGame();
                             }, 2000);
                         } else {
+                            console.log("losses " + loses);
                             loses++;
                             $("#trivia-questions").html("<h3>Incorrect, the answer is </h3>" + correctAnswer);
                             $("#loses").html("<h2>" + loses + "</h2>");
@@ -84,13 +94,25 @@ $(document).ready(function () {
                             }, 2000);
                         }
                     });
+                    
                     questionNumber++;
+                    console.log("question incrementing " + questionNumber);
 
-                } else { $()
+                } else {
+                    setTimeout(function () {
+                        $("#trivia-questions").empty();
+                        $("#trivia-questions").append($("<h2>").text("Game over! Press Start to play again."));
+                        wins = 0;
+                        console.log("wins " + wins);
+                        loses = 0;
+                        console.log("losses " + loses);
+                        stopTimer();
+                    }, 2000);
+
                 };
             };
 
-            nextGame();
+
             //  Interval Demonstration
             //  Set our number counter 
             var number = 20;
@@ -101,11 +123,9 @@ $(document).ready(function () {
 
             function runTimer() {
 
-                console.log("run timer");
                 clearInterval(intervalId);
                 intervalId = setInterval(decrement, 1000);
-                console.log("intervl id" + intervalId);
-            }
+               }
 
             //  The decrement function.
             function decrement() {
@@ -125,28 +145,27 @@ $(document).ready(function () {
 
                     //  Alert the user that time is up.
 
-                    $("#timer").html("<h3>Time Up!</h3>" );
+                    $("#timer").html("<h3>Time Up!</h3>");
 
                     setTimeout(function () {
                         nextGame();
                     }, 2000);
 
-                }
-            }
+                };
+            };
 
             //  The stop function
             function stopTimer() {
                 number = 20;
-                console.log("stopTimer");
-                console.log("interval ID " + intervalId);
-                //  Clears our intervalId
+                  //  Clears our intervalId
                 //  We just pass the name of the interval
                 //  to the clearInterval function.
                 clearInterval(intervalId);
-            }
+            };
+            nextGame();
         }).fail(function (err) {
             throw err;
         });
 
-    }
+    };
 });

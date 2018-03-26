@@ -1,2 +1,2 @@
 # TriviaGame
-Trivia game was created using javascript.
+Trivia game was created using javascript and jquery.

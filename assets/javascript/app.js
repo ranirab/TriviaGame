@@ -22,7 +22,10 @@ $(document).ready(function () {
         var correctAnswer;
         var wins = 0;
         var loses = 0;
-    
+
+        $("#wins").html("<h2>" + wins + "</h2>");        
+        $("#loses").html("<h2>" + loses + "</h2>");
+        
         // questions
         var url = " https://opentdb.com/api.php?amount=20";    
         $.ajax({        
@@ -94,7 +97,7 @@ $(document).ready(function () {
                             }, 2000);
                         }
                     });
-                    
+
                     questionNumber++;
                     console.log("question incrementing " + questionNumber);
 
@@ -102,12 +105,7 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $("#trivia-questions").empty();
                         $("#trivia-questions").append($("<h2>").text("Game over! Press Start to play again."));
-                        wins = 0;
-                        $("#wins").html("<h2>" + wins + "</h2>");
-                        console.log("wins " + wins);
-                        loses = 0;
-                        $("#loses").html("<h2>" + loses + "</h2>");
-                        console.log("losses " + loses);
+
                         stopTimer();
                     }, 2000);
 
@@ -127,7 +125,7 @@ $(document).ready(function () {
 
                 clearInterval(intervalId);
                 intervalId = setInterval(decrement, 1000);
-               }
+            }
 
             //  The decrement function.
             function decrement() {
@@ -159,7 +157,7 @@ $(document).ready(function () {
             //  The stop function
             function stopTimer() {
                 number = 20;
-                  //  Clears our intervalId
+                //  Clears our intervalId
                 //  We just pass the name of the interval
                 //  to the clearInterval function.
                 clearInterval(intervalId);

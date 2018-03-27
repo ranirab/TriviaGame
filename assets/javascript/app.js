@@ -103,8 +103,10 @@ $(document).ready(function () {
                         $("#trivia-questions").empty();
                         $("#trivia-questions").append($("<h2>").text("Game over! Press Start to play again."));
                         wins = 0;
+                        $("#wins").html("<h2>" + wins + "</h2>");
                         console.log("wins " + wins);
                         loses = 0;
+                        $("#loses").html("<h2>" + loses + "</h2>");
                         console.log("losses " + loses);
                         stopTimer();
                     }, 2000);
